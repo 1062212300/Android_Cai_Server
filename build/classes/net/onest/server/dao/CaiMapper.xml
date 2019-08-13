@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:映射器接口的全名 -->
+<mapper namespace="net.onest.server.dao.CaiMapper">
+
+    <!-- 结果映射 -->
+    <resultMap type="net.onest.server.entity.Cai" id="caiMap">
+        <id column="id" property="id"></id>
+        <result column="cai_name" property="caiName"/>
+        <result column="cai_desc" property="caiDesc"/>
+        <result column="cai_class" property="caiClass"/>
+        <result column="cai_raw" property="caiRaw"/>
+        <result column="cai_step" property="caiStep"/>
+        <result column="cai_image_url" property="caiImageUrl"/>
+    </resultMap>
+    
+    <!-- 映射select语句 -->
+    <select id="searchCaiFromAll"  resultMap="caiMap">
+           select *
+           from cai  
+           where 
+           	CONCAT(
+           		cai_name,
+           		cai_class,
+           		cai_raw
+           		)          
+           like
+            "%"#{caiName}"%"
+          
+    </select>
+    
+    <select id="findAllCai"  resultMap="caiMap">
+           select * from cai 
+    </select>
+    <select id="searchCaiByName" resultMap="caiMap">
+           select * from cai where cai_name = #{caiName}
+    </select>
+    
+    <insert id="insertCai" >
+         insert into cai(cai_name,cai_desc,cai_class,cai_raw,cai_step,cai_image_url)
+         values(#{caiName},#{caiDesc},#{caiClass},#{caiRaw},#{caiStep},#{caiImageUrl})
+    </insert>
+    
+</mapper>
